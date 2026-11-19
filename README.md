@@ -87,17 +87,18 @@ In the plugin element's **Actions** tab, build this sequence on **Action to run 
    Concat(Coalesce([PublishLog], ""), "|", [PageNo])
    ```
 
-**The order matters.** The plugin can't tell when an action finishes, so it watches the confirmation log for a change. The log has to change only after the API call succeeds. If the call fails, the sequence stops before step 2, the log doesn't change, and the plugin stops at that page.
+**The order matters.** The plugin can't tell when an action finishes, so it watches the confirmation log for a change. The log has to change only after the API call succeeds. If the call fails, the sequence should stop before step 2, so the log doesn't change and the plugin stops at that page. Confirm this in step 7.
 
 ### 7. Try a small run first
 
-Set **Records per page** to 1 or 2 and point the connector at a test endpoint. Check what your API receives, then run the full batch.
+Set **Records per page** to 1 or 2 and point the connector at a test endpoint. Check what your API receives. Then point the connector at an endpoint that returns an error and confirm the plugin stops at the first page. Then run the full batch.
 
 ## Things to know
 
 - **It runs in the browser.** Closing the tab or navigating away stops the loop partway. Make the receiving system accept repeats, then resume.
 - **A timeout doesn't mean the page failed.** If a page confirms late, the receiving system may have processed it already. Resuming sends it again.
 - **Check the record count.** The summary shows how many records the plugin received. Compare it with your table before you run, because the plugin can only send what Sigma passes to it.
+- **It pages the records it sends.** It doesn't follow a next-page token that an API returns in its response. If you need that, see `AGENTS.md`.
 - **One run at a time.** Controls lock while a run is in progress. Use **Stop** to end after the current page.
 - **Pacing.** **Minimum seconds per page** (default 1.2) keeps you under a 60-requests-per-minute connector limit. Lower it only if you raise the limit.
 - **Maximum wait per page** (default 150 seconds) should be longer than your connector's request timeout.

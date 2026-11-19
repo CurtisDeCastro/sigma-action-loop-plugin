@@ -30,6 +30,7 @@ There's no build step. Serve the folder with any static server, register the URL
 
 ## Ideas that fit
 
+- A mode that follows a next-page token. The action writes the token from the API response to a control, the plugin passes it into the next call, and the loop ends when the token is empty.
 - A configurable per-page retry before stopping.
 - Showing the last response status in the page table. This needs the action to write it to a control.
 - Resuming automatically after a reload by reading the confirmation log.
