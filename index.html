@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- connect-src 'none' makes the browser block every network request from this page.
+     The plugin talks to Sigma only through the plugin SDK (postMessage). -->
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'; connect-src 'none'">
+<title>Action loop</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h2>Send in pages</h2>
+<div id="app">Connecting...</div>
+<!-- React must load before the SDK. The SDK reads window.React. -->
+<script src="vendor/react.production.min.js"></script>
+<script src="vendor/sigmacomputing-plugin.umd.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
